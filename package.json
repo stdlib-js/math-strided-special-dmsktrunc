@@ -1,6 +1,6 @@
 {
   "name": "@stdlib/math-strided-special-dmsktrunc",
-  "version": "0.0.0",
+  "version": "0.0.8",
   "description": "Round each element in a double-precision floating-point strided array toward zero according to a strided mask array.",
   "license": "Apache-2.0",
   "author": {
