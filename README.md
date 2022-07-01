@@ -30,32 +30,30 @@ limitations under the License.
 
 <!-- /.intro -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/math-strided-special-dmsktrunc
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm` branch][esm-url].
+-   If you are using Deno, visit the [`deno` branch][deno-url].
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd` branch][umd-url].
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
-To use in Observable,
-
 ```javascript
-dmsktrunc = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/math-strided-special-dmsktrunc@umd/bundle.js' )
-```
-
-To include the bundle in a webpage,
-
-```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/math-strided-special-dmsktrunc@umd/bundle.js"></script>
-```
-
-If no recognized module system is present, access bundle contents via the global scope:
-
-```html
-<script type="text/javascript">
-(function () {
-    window.dmsktrunc;
-})();
-</script>
+var dmsktrunc = require( '@stdlib/math-strided-special-dmsktrunc' );
 ```
 
 #### dmsktrunc( N, x, sx, m, sm, y, sy )
@@ -170,16 +168,11 @@ dmsktrunc.ndarray( 3, x, 2, 1, m, 2, 1, y, -1, y.length-1 );
 
 <!-- eslint no-undef: "error" -->
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-base-uniform@umd/bundle.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/array-float64@umd/bundle.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/array-uint8@umd/bundle.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/math-strided-special-dmsktrunc@umd/bundle.js"></script>
-<script type="text/javascript">
-(function () {
+```javascript
+var uniform = require( '@stdlib/random-base-uniform' );
+var Float64Array = require( '@stdlib/array-float64' );
+var Uint8Array = require( '@stdlib/array-uint8' );
+var dmsktrunc = require( '@stdlib/math-strided-special-dmsktrunc' );
 
 var x = new Float64Array( 10 );
 var m = new Uint8Array( 10 );
@@ -198,11 +191,6 @@ console.log( y );
 
 dmsktrunc.ndarray( x.length, x, 1, 0, m, 1, 0, y, -1, y.length-1 );
 console.log( y );
-
-})();
-</script>
-</body>
-</html>
 ```
 
 </section>
@@ -211,7 +199,118 @@ console.log( y );
 
 <!-- C interface documentation. -->
 
+* * *
 
+<section class="c">
+
+## C APIs
+
+<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
+
+<section class="intro">
+
+</section>
+
+<!-- /.intro -->
+
+<!-- C usage documentation. -->
+
+<section class="usage">
+
+### Usage
+
+```c
+#include "stdlib/math/strided/special/dmsktrunc.h"
+```
+
+#### stdlib_strided_dmsktrunc( N, \*X, strideX, \*Mask, strideMask, \*Y, strideY )
+
+Rounds each element in a double-precision floating-point strided array `X` toward zero according to a strided mask array and assigns the results to elements in a double-precision floating-point strided array `Y`.
+
+```c
+#include <stdint.h>
+
+double X[] = { 1.1, 2.5, -3.5, 4.0, -5.9, 6.4, -7.0, 8.2 };
+uint8_t Mask[] = { 0, 0, 1, 0, 1, 1, 0, 0 };
+double Y[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+
+int64_t N = 4;
+
+stdlib_strided_dmsktrunc( N, X, 2, Mask, 2, Y, 2 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] int64_t` number of indexed elements.
+-   **X**: `[in] double*` input array.
+-   **strideX**: `[in] int64_t` index increment for `X`.
+-   **Mask**: `[in] uint8_t*` mask array.
+-   **strideMask**: `[in] int64_t` index increment for `Mask`.
+-   **Y**: `[out] double*` output array.
+-   **strideY**: `[in] int64_t` index increment for `Y`.
+
+```c
+void stdlib_strided_dmsktrunc( const int64_t N, const double *X, const int64_t strideX, const uint8_t *Mask, const int64_t strideMask, double *Y, const int64_t strideY );
+```
+
+</section>
+
+<!-- /.usage -->
+
+<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+<section class="notes">
+
+</section>
+
+<!-- /.notes -->
+
+<!-- C API usage examples. -->
+
+<section class="examples">
+
+### Examples
+
+```c
+#include "stdlib/math/strided/special/dmsktrunc.h"
+#include <stdint.h>
+#include <stdio.h>
+
+int main() {
+    // Create an input strided array:
+    double X[] = { 1.1, 2.5, -3.5, 4.0, -5.9, 6.4, -7.0, 8.2 };
+
+    // Create a mask strided array:
+    uint8_t M[] = { 0, 0, 1, 0, 1, 1, 0, 0 };
+
+    // Create an output strided array:
+    double Y[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+
+    // Specify the number of elements:
+    int64_t N = 4;
+
+    // Specify the stride lengths:
+    int64_t strideX = 2;
+    int64_t strideM = 2;
+    int64_t strideY = 2;
+
+    // Compute the results:
+    stdlib_strided_dmsktrunc( N, X, strideX, M, strideM, Y, strideY );
+
+    // Print the results:
+    for ( int i = 0; i < 8; i++ ) {
+        printf( "Y[ %i ] = %lf\n", i, Y[ i ] );
+    }
+}
+```
+
+</section>
+
+<!-- /.examples -->
+
+</section>
+
+<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -295,22 +394,23 @@ Copyright &copy; 2016-2022. The Stdlib [Authors][stdlib-authors].
 [deno-url]: https://github.com/stdlib-js/math-strided-special-dmsktrunc/tree/deno
 [umd-url]: https://github.com/stdlib-js/math-strided-special-dmsktrunc/tree/umd
 [esm-url]: https://github.com/stdlib-js/math-strided-special-dmsktrunc/tree/esm
+[branches-url]: https://github.com/stdlib-js/math-strided-special-dmsktrunc/blob/main/branches.md
 
 [stdlib-license]: https://raw.githubusercontent.com/stdlib-js/math-strided-special-dmsktrunc/main/LICENSE
 
-[@stdlib/array/float64]: https://github.com/stdlib-js/array-float64/tree/umd
+[@stdlib/array/float64]: https://github.com/stdlib-js/array-float64
 
-[@stdlib/array/uint8]: https://github.com/stdlib-js/array-uint8/tree/umd
+[@stdlib/array/uint8]: https://github.com/stdlib-js/array-uint8
 
 <!-- <related-links> -->
 
-[@stdlib/math/strided/special/dmskceil]: https://github.com/stdlib-js/math-strided-special-dmskceil/tree/umd
+[@stdlib/math/strided/special/dmskceil]: https://github.com/stdlib-js/math-strided-special-dmskceil
 
-[@stdlib/math/strided/special/dmskfloor]: https://github.com/stdlib-js/math-strided-special-dmskfloor/tree/umd
+[@stdlib/math/strided/special/dmskfloor]: https://github.com/stdlib-js/math-strided-special-dmskfloor
 
-[@stdlib/math/strided/special/dtrunc]: https://github.com/stdlib-js/math-strided-special-dtrunc/tree/umd
+[@stdlib/math/strided/special/dtrunc]: https://github.com/stdlib-js/math-strided-special-dtrunc
 
-[@stdlib/math/strided/special/smsktrunc]: https://github.com/stdlib-js/math-strided-special-smsktrunc/tree/umd
+[@stdlib/math/strided/special/smsktrunc]: https://github.com/stdlib-js/math-strided-special-smsktrunc
 
 <!-- </related-links> -->
 
